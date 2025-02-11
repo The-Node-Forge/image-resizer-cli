@@ -1,8 +1,11 @@
 {
-  "name": "@the-node-forge/my-npm-package",
+  "name": "@the-node-forge/image-resizer-cli",
   "version": "1.0.0",
-  "description": "A fully-configured TypeScript NPM package template with built-in CI/CD, automated tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best practices for package development",
-  "main": "src/index.ts",
+  "description": "A simple CLI tool for resizing images",
+  "main": "dist/bin/cli.js",
+  "bin": {
+    "img-resizer": "dist/bin/cli.js"
+  },
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
@@ -14,6 +17,7 @@
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "npm run build",
     "build": "tsc",
+    "start": "node dist/bin/cli.js",
     "docs:generate": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
     "docs:build": "npm run docs:generate && cd docs && npm run build",
     "docs:start": "npm run docs:generate && cd docs && npm start",
@@ -22,12 +26,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/The-Node-Forge/npm-template"
+    "url": "https://github.com/The-Node-Forge/image-resizer-cli"
   },
   "keywords": [
-    "express",
+    "image",
+    "image-resizer",
+    "resize",
+    "cli",
+    "sharp",
+    "image-processing",
     "typescript",
-    "npm-package"
+    "javascript",
+    "node-cli",
+    "batch-resize",
+    "image-tools",
+    "jpeg",
+    "png",
+    "webp",
+    "photo",
+    "image-compression",
+    "the-node-forge"
   ],
   "author": "The Node Forge",
   "license": "MIT",
@@ -54,5 +72,10 @@
     "typedoc": "^0.27.6",
     "typedoc-plugin-markdown": "^4.4.1",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "sharp": "^0.33.5"
   }
 }
