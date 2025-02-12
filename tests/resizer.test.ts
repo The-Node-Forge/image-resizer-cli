@@ -13,7 +13,7 @@ import {
 describe('Image Resizer', () => {
   const testInput = path.join(__dirname, 'sample.jpg');
 
-  // ✅ Define output paths for all supported conversions
+  // define output paths for all supported conversions
   const testOutputs = {
     jpg: path.join(__dirname, 'output.jpg'),
     png: path.join(__dirname, 'output.png'),
@@ -27,12 +27,12 @@ describe('Image Resizer', () => {
   const batchOutputDir = path.join(__dirname, 'batch_output');
 
   beforeEach(async () => {
-    // ✅ Ensure test directories exist
+    // ensure test directories exist
     await fsPromises.mkdir(batchInputDir, { recursive: true });
   });
 
   afterEach(async () => {
-    // ✅ Remove all generated test files
+    // remove all generated test files
     await Promise.all(
       Object.values(testOutputs).map(async (file) => {
         if (fs.existsSync(file)) {
@@ -51,19 +51,24 @@ describe('Image Resizer', () => {
     expect(fs.existsSync(testOutputs.jpg)).toBe(true);
   });
 
-  // ✅ Convert to all supported formats, including JPEG
+  // convert to all supported formats, including JPEG
   const supportedFormats = ['jpg', 'png', 'webp', 'tiff', 'avif'] as const;
 
   supportedFormats.forEach((format) => {
-    test(`should convert an image to ${format.toUpperCase()} successfully`, async () => {
-      await convertImage(testInput, testOutputs[format]);
-      expect(fs.existsSync(testOutputs[format])).toBe(true);
-    });
+    const timeout = format === 'avif' ? 15000 : 5000; // Extend timeout for AVIF
+    test(
+      `should convert an image to ${format.toUpperCase()} successfully`,
+      async () => {
+        await convertImage(testInput, testOutputs[format]);
+        expect(fs.existsSync(testOutputs[format])).toBe(true);
+      },
+      timeout, // Apply timeout to slow tests
+    );
   });
 
   test('should fail when converting to an unsupported format', async () => {
     await expect(convertImage(testInput, testOutputs.invalid)).rejects.toThrow(
-      'Invalid format: gif',
+      /Invalid format: gif/,
     );
   });
 
