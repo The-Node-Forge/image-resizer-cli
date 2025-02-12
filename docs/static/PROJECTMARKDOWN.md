@@ -29,6 +29,18 @@ needing quick and efficient image manipulation directly from the command line.**
 
 ---
 
+## 🎯 **Supported Image Formats**
+
+This package supports the following image formats:
+
+- **JPEG** (`.jpg`, `.jpeg`)
+- **PNG** (`.png`)
+- **WebP** (`.webp`)
+- **TIFF** (`.tiff`)
+- **AVIF** (`.avif`)
+
+---
+
 ## 📚 Installation
 
 ```sh
@@ -52,7 +64,6 @@ yarn global add @the-node-forge/image-resizer-cli
 | `img-resizer batch-resize <inputDir> <outputDir> --width <number> --height <number>` | Resize all images in a directory                          |
 | `img-resizer compress <input> <output> --quality <number>`                           | Compress an image with adjustable quality (1-100)         |
 | `img-resizer info <input>`                                                           | Display image metadata (format, size, dimensions)         |
-| `img-resizer --help`                                                                 | Show all available commands and options                   |
 
 ---
 

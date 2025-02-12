@@ -1,6 +1,6 @@
 [**@the-node-forge/image-resizer-cli**](README.md)
 
----
+***
 
 # @the-node-forge/image-resizer-cli
 
