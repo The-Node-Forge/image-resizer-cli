@@ -1,6 +1,6 @@
 **@the-node-forge/image-resizer-cli**
 
-***
+---
 
 <div align="center">
 
