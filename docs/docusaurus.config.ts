@@ -4,7 +4,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'The Node Forge', // Edit
-  tagline: 'Lightweight NPM Packages Made Easy', // Edit
+  tagline:
+    'A fast and lightweight CLI tool for resizing, compressing, and converting images in multiple formats (JPEG, PNG, WebP, etc.). Supports batch processing, custom dimensions, and high-quality optimization using Sharp. Ideal for developers, designers, and automation scripts.',
   favicon: 'img/favicon.ico',
 
   url: 'https://the-node-forge.github.io',
@@ -67,12 +68,12 @@ const config: Config = {
           label: 'Docs',
         },
 
-        {
-          type: 'docSidebar',
-          sidebarId: 'apiSidebar',
-          position: 'left',
-          label: 'API',
-        },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'apiSidebar',
+        //   position: 'left',
+        //   label: 'API',
+        // },
         // uncomment to enable blogs
         // { to: '/blog', label: 'Blog', position: 'left' },
         {

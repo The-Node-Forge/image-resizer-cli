@@ -1,9 +1,13 @@
-[**my-npm-package**](README.md)
+[**@the-node-forge/image-resizer-cli**](README.md)
 
----
+***
 
-# my-npm-package
+# @the-node-forge/image-resizer-cli
 
 ## Functions
 
-- [greet](functions/greet.md)
+- [batchResize](functions/batchResize.md)
+- [compressImage](functions/compressImage.md)
+- [convertImage](functions/convertImage.md)
+- [getImageInfo](functions/getImageInfo.md)
+- [resizeImage](functions/resizeImage.md)

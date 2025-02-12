@@ -11,9 +11,11 @@ guides:
 
 ## Description
 
-**A fully-configured TypeScript NPM package template with built-in CI/CD, automated
-tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best
-practices for package development**
+**Image Resizer CLI is a fast, lightweight, and versatile Node.js CLI tool for
+resizing, converting, compressing, and optimizing images in JPEG, PNG, WebP, and
+other formats. It supports batch processing, custom dimensions, and high-quality
+compression using sharp. Ideal for developers, designers, and automation workflows
+needing quick and efficient image manipulation directly from the command line.**
 
 ### 📌 Getting Started
 
