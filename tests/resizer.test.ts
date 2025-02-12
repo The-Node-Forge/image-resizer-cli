@@ -1,18 +1,26 @@
-const { resizeImage } = require("../src/resizer");
-const fs = require("fs");
+const { resizeImage } = require('../src/resizer');
+const fs = require('fs');
+const path = require('path');
 
-const testInput = "tests/sample.jpg";
-const testOutput = "tests/output.jpg";
+describe('Image Resizer', () => {
+  const testInput = path.join(__dirname, 'sample.jpg');
+  const testOutput = path.join(__dirname, 'output.jpg');
 
-(async () => {
-  try {
-    await resizeImage(testInput, testOutput, 300, 200);
+  afterEach(() => {
     if (fs.existsSync(testOutput)) {
-      console.log("✅ Test Passed: Image resized successfully.");
-    } else {
-      console.log("❌ Test Failed: Output file not found.");
+      fs.unlinkSync(testOutput);
     }
-  } catch (error) {
-    console.error("❌ Test Failed:", error);
-  }
-})();
+  });
+
+  test('should resize an image successfully', async () => {
+    await resizeImage(testInput, testOutput, 300, 200);
+
+    expect(fs.existsSync(testOutput)).toBe(true);
+  });
+
+  test('should fail for non-existent file', async () => {
+    await expect(
+      resizeImage('tests/nonexistent.jpg', testOutput, 300, 200),
+    ).rejects.toThrow();
+  });
+});
