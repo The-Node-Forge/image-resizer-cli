@@ -2,7 +2,8 @@
 
 > **getImageInfo**(`inputPath`): `Promise`\<`object`\>
 
-Defined in: [resizer.ts:116](https://github.com/The-Node-Forge/image-resizer-cli/blob/a50dec538743738c16fa6c46084c5ae1f6446b33/src/resizer.ts#L116)
+Defined in:
+[resizer.ts:116](https://github.com/The-Node-Forge/image-resizer-cli/blob/a50dec538743738c16fa6c46084c5ae1f6446b33/src/resizer.ts#L116)
 
 Get metadata of an image.
 
