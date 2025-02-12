@@ -88,7 +88,7 @@ program
     },
   );
 
-// Compress an image
+// compress an image
 program
   .command('compress <input> <output>')
   .description('Compress an image while maintaining quality')
@@ -112,7 +112,7 @@ program
     },
   );
 
-// Get image metadata
+// get image metadata
 program
   .command('info <input>')
   .description('Get metadata of an image')
