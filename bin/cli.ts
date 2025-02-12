@@ -16,7 +16,6 @@ program
   .description('CLI tool for resizing images')
   .version('1.0.0');
 
-// resize an image
 interface ResizeOptions {
   width?: number;
   height?: number;
@@ -26,6 +25,7 @@ interface CompressOptions {
   quality?: number;
 }
 
+// resize an image
 program
   .command('resize <input> <output>')
   .description('Resize an image')

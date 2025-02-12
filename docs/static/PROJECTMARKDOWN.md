@@ -98,7 +98,30 @@ img-resizer info input.jpg
 
 ---
 
-## 📑 **Contributing**
+## 📚 **Custom Output File Naming**
+
+When using `img-resizer`, you can name the output file **whatever you want**,
+including setting a custom directory.
+
+### **Example Custom Naming**
+
+```bash
+img-resizer resize input.jpg my_custom_name.png --width 400 --height 300
+```
+
+- Output file: `my_custom_name.png`
+
+```bash
+img-resizer resize input.jpg /images/optimized-photo.webp --width 600 --height 400
+```
+
+- Output file: `/images/optimized-photo.webp`
+
+If the output directory doesn’t exist, it will be **automatically created**.
+
+---
+
+## 👑 **Contributing**
 
 Contributions are welcome! Please submit  
 [issues](https://github.com/The-Node-Forge/image-resizer-cli/issues) or  
@@ -116,4 +139,4 @@ If you find this package useful, please **give it a ⭐ on**
 ### 🔗 **Links**
 
 - 📚 [NPM Package](https://www.npmjs.com/package/@the-node-forge/image-resizer-cli)
-- 🏗 [The Node Forge](https://github.com/The-Node-Forge)
+- 🏠 [The Node Forge](https://github.com/The-Node-Forge)

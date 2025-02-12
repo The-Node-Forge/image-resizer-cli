@@ -1,10 +1,8 @@
 # Function: resizeImage()
 
-> **resizeImage**(`inputPath`, `outputPath`, `width`?, `height`?):
-> `Promise`\<`void`\>
+> **resizeImage**(`inputPath`, `outputPath`, `width`?, `height`?): `Promise`\<`void`\>
 
-Defined in:
-[resizer.ts:8](https://github.com/The-Node-Forge/image-resizer-cli/blob/ac1137c1cc2297506a4fb919c37bb6c278f4c1be/src/resizer.ts#L8)
+Defined in: [resizer.ts:8](https://github.com/The-Node-Forge/image-resizer-cli/blob/a98cb4bd36cd4402466d3cc3dee8981f37bd442a/src/resizer.ts#L8)
 
 Resize an image to the given dimensions.
 
