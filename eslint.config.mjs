@@ -19,7 +19,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['docs/**'],
+    ignores: ['docs/**', 'dist/**'],
   },
   ...fixupConfigRules(
     compat.extends(
@@ -58,14 +58,12 @@ export default [
     },
 
     rules: {
-      'space-before-function-paren': ['error', 'always'], // Space before function parentheses
       'func-call-spacing': ['error', 'never'], // Prevents spaces inside function calls
       'comma-spacing': ['error', { before: false, after: true }], // Space after commas in function args
       'object-curly-spacing': ['error', 'always'], // Ensures spaces inside curly braces
       'keyword-spacing': ['error', { before: true, after: true }], // Space around keywords
       'space-infix-ops': ['error', { int32Hint: false }], // Space around operators
       semi: ['error', 'always'],
-      'no-magic-numbers': ['error', { ignore: [0, 1] }],
       'import/order': [
         'error',
         {
@@ -77,8 +75,6 @@ export default [
         },
       ],
       'no-unused-vars': ['warn'],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prefer-template': 'warn',
       'prefer-destructuring': [
         'error',
         {

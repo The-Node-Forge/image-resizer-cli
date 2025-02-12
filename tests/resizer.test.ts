@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+const fs = require('fs');
+const path = require('path');
+
 const {
   resizeImage,
   convertImage,
@@ -5,8 +10,6 @@ const {
   compressImage,
   getImageInfo,
 } = require('../src/resizer');
-const fs = require('fs');
-const path = require('path');
 
 describe('Image Resizer', () => {
   const testInput = path.join(__dirname, 'sample.jpg');

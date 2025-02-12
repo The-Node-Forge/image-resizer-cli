@@ -1,6 +1,8 @@
-#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const { program } = require('commander');
+const chalk = require('chalk');
+
 const {
   resizeImage,
   convertImage,
@@ -8,7 +10,6 @@ const {
   compressImage,
   getImageInfo,
 } = require('../src/resizer');
-const chalk = require('chalk');
 
 program
   .name('img-resizer')
