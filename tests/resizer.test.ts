@@ -50,7 +50,6 @@ describe('Image Resizer', () => {
     expect(fs.existsSync(testOutputs.jpg)).toBe(true);
   });
 
-  // convert to all supported formats, including JPEG
   const supportedFormats = ['jpg', 'png', 'webp', 'tiff', 'avif'] as const;
 
   supportedFormats.forEach((format) => {

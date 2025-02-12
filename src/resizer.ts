@@ -2,9 +2,6 @@ import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
-/**
- * Resize an image to the given dimensions.
- */
 export async function resizeImage(
   inputPath: string,
   outputPath: string,
@@ -22,9 +19,6 @@ export async function resizeImage(
   }
 }
 
-/**
- * Convert an image to a different format.
- */
 export async function convertImage(
   inputPath: string,
   outputPath: string,
@@ -32,7 +26,6 @@ export async function convertImage(
   try {
     let format = path.extname(outputPath).slice(1).toLowerCase();
 
-    // Normalize "jpg" to "jpeg"
     if (format === 'jpg') format = 'jpeg';
 
     const validFormats = ['jpeg', 'png', 'webp', 'tiff', 'avif'];
@@ -56,9 +49,6 @@ export async function convertImage(
   }
 }
 
-/**
- * Batch resize all images in a directory.
- */
 export async function batchResize(
   inputDir: string,
   outputDir: string,
@@ -70,7 +60,6 @@ export async function batchResize(
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    // ✅ Added support for TIFF & AVIF formats
     const supportedFormats = /\.(jpg|jpeg|png|webp|tiff|avif)$/i;
 
     const files = fs
@@ -91,9 +80,6 @@ export async function batchResize(
   }
 }
 
-/**
- * Compress an image while maintaining quality.
- */
 export async function compressImage(
   inputPath: string,
   outputPath: string,
@@ -110,9 +96,6 @@ export async function compressImage(
   }
 }
 
-/**
- * Get metadata of an image.
- */
 export async function getImageInfo(inputPath: string): Promise<object> {
   try {
     return await sharp(inputPath).metadata();

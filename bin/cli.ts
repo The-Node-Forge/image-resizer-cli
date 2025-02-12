@@ -25,7 +25,6 @@ interface CompressOptions {
   quality?: number;
 }
 
-// resize an image
 program
   .command('resize <input> <output>')
   .description('Resize an image')
@@ -46,7 +45,6 @@ program
     },
   );
 
-// Convert an image to a different format
 program
   .command('convert <input> <output>')
   .description('Convert an image to a different format (e.g., PNG to JPG)')
@@ -63,7 +61,6 @@ program
     }
   });
 
-// batch resize multiple images
 program
   .command('batch-resize <inputDir> <outputDir>')
   .description('Resize all images in a directory')
@@ -88,7 +85,6 @@ program
     },
   );
 
-// compress an image
 program
   .command('compress <input> <output>')
   .description('Compress an image while maintaining quality')
@@ -112,7 +108,6 @@ program
     },
   );
 
-// get image metadata
 program
   .command('info <input>')
   .description('Get metadata of an image')
