@@ -30,7 +30,10 @@ export async function convertImage(
   outputPath: string,
 ): Promise<void> {
   try {
-    const format = path.extname(outputPath).slice(1).toLowerCase();
+    let format = path.extname(outputPath).slice(1).toLowerCase();
+
+    // Normalize "jpg" to "jpeg"
+    if (format === 'jpg') format = 'jpeg';
 
     const validFormats = ['jpeg', 'png', 'webp', 'tiff', 'avif'];
 
@@ -43,7 +46,6 @@ export async function convertImage(
     await sharp(inputPath)
       .toFormat(format as keyof sharp.FormatEnum)
       .toFile(outputPath);
-    console.log(`✅ Image converted successfully: ${outputPath}`);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('❌ Failed to convert image: ' + error.message);
@@ -68,9 +70,12 @@ export async function batchResize(
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    // ✅ Added support for TIFF & AVIF formats
+    const supportedFormats = /\.(jpg|jpeg|png|webp|tiff|avif)$/i;
+
     const files = fs
       .readdirSync(inputDir)
-      .filter((file) => /\.(jpg|jpeg|png|webp)$/i.test(file));
+      .filter((file) => supportedFormats.test(file));
 
     for (const file of files) {
       const inputPath = path.join(inputDir, file);
