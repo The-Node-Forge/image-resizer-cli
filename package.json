@@ -1,6 +1,6 @@
 {
   "name": "@the-node-forge/image-resizer-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A fast and lightweight CLI tool for resizing, compressing, and converting images in multiple formats (JPEG, PNG, WebP, etc.). Supports batch processing, custom dimensions, and high-quality optimization using Sharp. Ideal for developers, designers, and automation scripts.",
   "main": "dist/bin/cli.js",
   "bin": {
