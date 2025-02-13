@@ -13,7 +13,7 @@ const {
   batchResize,
   compressImage,
   getImageInfo,
-} = require('../src/resizer');
+} = require('../resizer');
 
 async function getChalk() {
   const chalk = await chalkPromise;
