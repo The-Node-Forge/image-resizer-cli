@@ -3,9 +3,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 const { program } = require('commander');
-
-// Dynamically import chalk to avoid ESM issues
-const chalkPromise = import('chalk');
+const chalk = require('chalk');
 
 const {
   resizeImage,
@@ -14,11 +12,6 @@ const {
   compressImage,
   getImageInfo,
 } = require('../resizer');
-
-async function getChalk() {
-  const chalk = await chalkPromise;
-  return chalk.default;
-}
 
 program
   .name('img-resizer')
@@ -41,7 +34,6 @@ program
   .option('-h, --height <number>', 'Height in pixels', parseInt)
   .action(
     async (input: string, output: string, options: ResizeOptions): Promise<void> => {
-      const chalk = await getChalk();
       try {
         await resizeImage(input, output, options.width, options.height);
         console.log(chalk.green(`✅ Image resized successfully!`));
@@ -59,7 +51,6 @@ program
   .command('convert <input> <output>')
   .description('Convert an image to a different format (e.g., PNG to JPG)')
   .action(async (input: string, output: string): Promise<void> => {
-    const chalk = await getChalk();
     try {
       await convertImage(input, output);
       console.log(chalk.green(`✅ Image converted successfully: ${output}`));
@@ -83,7 +74,6 @@ program
       outputDir: string,
       options: ResizeOptions,
     ): Promise<void> => {
-      const chalk = await getChalk();
       try {
         await batchResize(inputDir, outputDir, options.width, options.height);
         console.log(chalk.green(`✅ All images resized successfully!`));
@@ -107,7 +97,6 @@ program
       output: string,
       options: CompressOptions,
     ): Promise<void> => {
-      const chalk = await getChalk();
       try {
         await compressImage(input, output, options.quality || 80);
         console.log(chalk.green(`✅ Image compressed successfully: ${output}`));
@@ -125,7 +114,6 @@ program
   .command('info <input>')
   .description('Get metadata of an image')
   .action(async (input: string): Promise<void> => {
-    const chalk = await getChalk();
     try {
       const metadata = await getImageInfo(input);
       console.log(chalk.yellow(`📷 Image Info:`), metadata);
