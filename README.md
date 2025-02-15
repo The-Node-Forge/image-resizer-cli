@@ -4,6 +4,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![NPM Version](https://img.shields.io/npm/v/@the-node-forge/image-resizer-cli)](https://www.npmjs.com/package/@the-node-forge/image-resizer-cli)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/image-resizer-cli/ci.yaml?branch=main)](https://github.com/The-Node-Forge/image-resizer-cli/actions)
+
 [Live Documentation](https://the-node-forge.github.io/image-resizer-cli/)
 
 </div>
