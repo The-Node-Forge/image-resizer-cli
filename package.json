@@ -57,7 +57,10 @@
     "photo-editor",
     "node-image-tool"
   ],
-  "author": "The Node Forge",
+  "author": {
+    "name": "Lanny MacMillan",
+    "url": "https://github.com/Lanny-MacMillan"
+  },
   "license": "MIT",
   "files": [
     "dist",
