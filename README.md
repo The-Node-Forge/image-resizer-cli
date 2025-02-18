@@ -4,10 +4,12 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![NPM Version](https://img.shields.io/npm/v/@the-node-forge/image-resizer-cli)](https://www.npmjs.com/package/@the-node-forge/image-resizer-cli)
-[![NPM Downloads](https://img.shields.io/npm/dm/@the-node-forge/image-resizer-cli)](https://www.npmjs.com/package/@the-node-forge/image-resizer-cli)
+![Made with TypeScript](https://img.shields.io/badge/Made%20with-TypeScript-007acc)
 
+[![NPM Version](https://img.shields.io/npm/v/@the-node-forge/image-resizer-cli)](https://www.npmjs.com/package/@the-node-forge/image-resizer-cli)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/image-resizer-cli/ci.yaml?branch=main)](https://github.com/The-Node-Forge/image-resizer-cli/actions)
+![Platform](https://img.shields.io/badge/platform-CLI%20%7C%20Linux%20%7C%20macOS%20%7C%20Windows-blue)
+
 
 [Live Documentation](https://the-node-forge.github.io/image-resizer-cli/)
 
