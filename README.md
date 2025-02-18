@@ -10,7 +10,6 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/image-resizer-cli/ci.yaml?branch=main)](https://github.com/The-Node-Forge/image-resizer-cli/actions)
 ![Platform](https://img.shields.io/badge/platform-CLI%20%7C%20Linux%20%7C%20macOS%20%7C%20Windows-blue)
 
-
 [Live Documentation](https://the-node-forge.github.io/image-resizer-cli/)
 
 </div>
