@@ -9,7 +9,12 @@ export async function resizeImage(
   height?: number,
 ): Promise<void> {
   try {
-    await sharp(inputPath).resize(width, height).toFile(outputPath);
+    await sharp(inputPath)
+      .resize(width, height, {
+        fit: 'contain',
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .toFile(outputPath);
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error('Failed to process image: ' + error.message);
@@ -69,6 +74,7 @@ export async function batchResize(
     for (const file of files) {
       const inputPath = path.join(inputDir, file);
       const outputPath = path.join(outputDir, file);
+
       await resizeImage(inputPath, outputPath, width, height);
     }
   } catch (error: unknown) {
