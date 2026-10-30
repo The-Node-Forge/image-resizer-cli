@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ### Prerequisites
 
-- Node.js version 14.x or later
+- Node.js version 20.9 or later
 - npm or yarn
 
 ### Installation Steps
