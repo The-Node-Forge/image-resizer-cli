@@ -2,9 +2,10 @@
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-const { program } = require('commander');
+const { program, InvalidArgumentError } = require('commander');
 const chalk = require('chalk');
 
+const { version } = require('../../package.json');
 const {
   resizeImage,
   convertImage,
@@ -16,7 +17,21 @@ const {
 program
   .name('img-resizer')
   .description('CLI tool for resizing images')
-  .version('1.0.0');
+  .version(version);
+
+function parseIntegerOption(value: string): number {
+  if (!/^\d+$/.test(value)) {
+    throw new InvalidArgumentError('Must be a positive integer.');
+  }
+  return Number(value);
+}
+
+function reportError(err: unknown): void {
+  console.error(
+    chalk.red(`❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`),
+  );
+  process.exitCode = 1;
+}
 
 interface ResizeOptions {
   width?: number;
@@ -30,19 +45,15 @@ interface CompressOptions {
 program
   .command('resize <input> <output>')
   .description('Resize an image')
-  .option('-w, --width <number>', 'Width in pixels', parseInt)
-  .option('-h, --height <number>', 'Height in pixels', parseInt)
+  .option('-w, --width <number>', 'Width in pixels', parseIntegerOption)
+  .option('-h, --height <number>', 'Height in pixels', parseIntegerOption)
   .action(
     async (input: string, output: string, options: ResizeOptions): Promise<void> => {
       try {
         await resizeImage(input, output, options.width, options.height);
         console.log(chalk.green(`✅ Image resized successfully!`));
       } catch (err: unknown) {
-        console.error(
-          chalk.red(
-            `❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-          ),
-        );
+        reportError(err);
       }
     },
   );
@@ -55,19 +66,15 @@ program
       await convertImage(input, output);
       console.log(chalk.green(`✅ Image converted successfully: ${output}`));
     } catch (err: unknown) {
-      console.error(
-        chalk.red(
-          `❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-        ),
-      );
+      reportError(err);
     }
   });
 
 program
   .command('batch-resize <inputDir> <outputDir>')
   .description('Resize all images in a directory')
-  .option('-w, --width <number>', 'Width in pixels', parseInt)
-  .option('-h, --height <number>', 'Height in pixels', parseInt)
+  .option('-w, --width <number>', 'Width in pixels', parseIntegerOption)
+  .option('-h, --height <number>', 'Height in pixels', parseIntegerOption)
   .action(
     async (
       inputDir: string,
@@ -78,11 +85,7 @@ program
         await batchResize(inputDir, outputDir, options.width, options.height);
         console.log(chalk.green(`✅ All images resized successfully!`));
       } catch (err: unknown) {
-        console.error(
-          chalk.red(
-            `❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-          ),
-        );
+        reportError(err);
       }
     },
   );
@@ -90,7 +93,7 @@ program
 program
   .command('compress <input> <output>')
   .description('Compress an image while maintaining quality')
-  .option('-q, --quality <number>', 'Quality (1-100)', parseInt)
+  .option('-q, --quality <number>', 'Quality (1-100)', parseIntegerOption)
   .action(
     async (
       input: string,
@@ -98,14 +101,10 @@ program
       options: CompressOptions,
     ): Promise<void> => {
       try {
-        await compressImage(input, output, options.quality || 80);
+        await compressImage(input, output, options.quality ?? 80);
         console.log(chalk.green(`✅ Image compressed successfully: ${output}`));
       } catch (err: unknown) {
-        console.error(
-          chalk.red(
-            `❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-          ),
-        );
+        reportError(err);
       }
     },
   );
@@ -118,11 +117,7 @@ program
       const metadata = await getImageInfo(input);
       console.log(chalk.yellow(`📷 Image Info:`), metadata);
     } catch (err: unknown) {
-      console.error(
-        chalk.red(
-          `❌ Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-        ),
-      );
+      reportError(err);
     }
   });
 

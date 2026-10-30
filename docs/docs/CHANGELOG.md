@@ -4,6 +4,40 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
+## Unreleased
+
+#### Security:
+
+- Upgraded `sharp` to `^0.35.5`, picking up fixes for the libvips, libheif and
+  librsvg vulnerabilities reported against `sharp@0.33.x`.
+- Ran `npm audit fix` for transitive dev dependencies.
+- Hardened GitHub Actions workflows: least-privilege `permissions`, actions pinned to
+  commit SHAs, `npm ci` for reproducible installs, and no `${{ }}` expression
+  interpolation inside `run` scripts.
+- Added Dependabot (npm, docs, GitHub Actions) and a `SECURITY.md` policy.
+- `--width`, `--height` and `--quality` are validated (positive integers; dimensions
+  1-16383, quality 1-100) instead of passing `NaN`/huge values through to `sharp`.
+- `batchResize` refuses to write into its input directory and ignores directories
+  whose names look like images.
+
+#### Changed:
+
+- **Breaking:** the minimum supported Node.js version is now 20.9 (required by
+  `sharp@0.35`). CI and docs deploys now run on Node 20.
+- `compressImage` / `img-resizer compress` now choose the output format from the file
+  extension (`jpg`, `jpeg`, `png`, `webp`, `avif`) instead of always writing JPEG
+  data. Other extensions are rejected. Existing `.jpg` usage is unaffected;
+  `.png`/`.webp` outputs are now real PNG/WebP files rather than JPEG data with a
+  misleading extension.
+
+#### Fixed:
+
+- CLI commands now exit with status code `1` on failure (previously always `0`).
+- `--version` reports the real package version (was hard-coded to `1.0.0`).
+- `main` in `package.json` points at the library entry (`dist/index.js`) instead of
+  the CLI, so `require('@the-node-forge/image-resizer-cli')` no longer runs the CLI.
+- `--quality 0` is no longer silently replaced by the default of 80.
+
 ## v1.1.0 - 2025-02-12
 
 #### Added:

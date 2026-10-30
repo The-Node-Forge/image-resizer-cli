@@ -12,8 +12,8 @@ Resizes an image to the specified width and height.
 
 - `inputPath` - `string` - Path to the input image.
 - `outputPath` - `string` - Path to save the resized image.
-- `width` - `number` (optional) - Desired width in pixels.
-- `height` - `number` (optional) - Desired height in pixels.
+- `width` - `number` (optional) - Desired width in pixels (integer, 1-16383).
+- `height` - `number` (optional) - Desired height in pixels (integer, 1-16383).
 
 **Returns:**
 
@@ -56,12 +56,13 @@ Resizes all images in a directory.
 
 - `inputDir` - `string` - Path to the directory containing images.
 - `outputDir` - `string` - Path to save resized images.
-- `width` - `number` (optional) - Desired width in pixels.
-- `height` - `number` (optional) - Desired height in pixels.
+- `width` - `number` (optional) - Desired width in pixels (integer, 1-16383).
+- `height` - `number` (optional) - Desired height in pixels (integer, 1-16383).
 
 **Returns:**
 
-- `Promise<void>` - Resolves when all images are resized.
+- `Promise<void>` - Resolves when all images are resized. Rejects if `outputDir` is
+  the same as `inputDir` (to avoid overwriting originals) or a dimension is invalid.
 
 **Examples:**
 
@@ -73,7 +74,8 @@ batchResize('images/', 'resized/', 500, 500);
 
 ### `compressImage(inputPath, outputPath, quality)`
 
-Compresses an image while maintaining quality.
+Compresses an image while maintaining quality. The output format is chosen from the
+output file extension (`jpg`, `jpeg`, `png`, `webp`, `avif`).
 
 **Parameters:**
 

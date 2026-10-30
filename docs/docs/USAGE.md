@@ -38,6 +38,16 @@ img-resizer info input.jpg
 
 ---
 
+### Validation and Exit Codes
+
+- `--width`, `--height` and `--quality` must be positive integers. Dimensions are
+  limited to 1-16383 and quality to 1-100; anything else is rejected with an error.
+- `batch-resize` refuses to use the input directory as the output directory.
+- The CLI exits with a non-zero status code when a command fails, so it is safe to
+  use in scripts and CI (`img-resizer resize in.jpg out.jpg -w 300 || exit 1`).
+
+---
+
 ### Configuration (Optional Settings)
 
 ```json

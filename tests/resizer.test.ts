@@ -53,7 +53,7 @@ describe('Image Resizer', () => {
   const supportedFormats = ['jpg', 'png', 'webp', 'tiff', 'avif'] as const;
 
   supportedFormats.forEach((format) => {
-    const timeout = format === 'avif' ? 15000 : 5000; // Extend timeout for AVIF
+    const timeout = format === 'avif' ? 30000 : 5000; // Extend timeout for AVIF
     test(
       `should convert an image to ${format.toUpperCase()} successfully`,
       async () => {

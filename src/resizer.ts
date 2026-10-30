@@ -1,13 +1,37 @@
-import sharp from 'sharp';
+import sharp, { type FormatEnum } from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
+/** Largest edge (in pixels) accepted for resize operations; matches libvips' limit. */
+export const MAX_DIMENSION = 16383;
+
+function assertDimension(value: number | undefined, name: string): void {
+  if (value === undefined) return;
+  if (!Number.isInteger(value) || value < 1 || value > MAX_DIMENSION) {
+    throw new Error(
+      `Invalid ${name}: ${value}. Must be an integer between 1 and ${MAX_DIMENSION}.`,
+    );
+  }
+}
+
+/**
+ * Resize an image, preserving the whole image (`contain`) on a transparent background.
+ *
+ * @param inputPath - Path of the source image.
+ * @param outputPath - Path to write the resized image to.
+ * @param width - Target width in pixels (1-16383).
+ * @param height - Target height in pixels (1-16383).
+ * @throws If a dimension is not a positive integer within range, or processing fails.
+ */
 export async function resizeImage(
   inputPath: string,
   outputPath: string,
   width?: number,
   height?: number,
 ): Promise<void> {
+  assertDimension(width, 'width');
+  assertDimension(height, 'height');
+
   try {
     await sharp(inputPath)
       .resize(width, height, {
@@ -24,6 +48,13 @@ export async function resizeImage(
   }
 }
 
+/**
+ * Convert an image to the format implied by the output file extension.
+ *
+ * @param inputPath - Path of the source image.
+ * @param outputPath - Output path; its extension (jpg, jpeg, png, webp, tiff, avif) selects the format.
+ * @throws If the extension is unsupported or conversion fails.
+ */
 export async function convertImage(
   inputPath: string,
   outputPath: string,
@@ -42,7 +73,7 @@ export async function convertImage(
     }
 
     await sharp(inputPath)
-      .toFormat(format as keyof sharp.FormatEnum)
+      .toFormat(format as keyof FormatEnum)
       .toFile(outputPath);
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -54,13 +85,33 @@ export async function convertImage(
   }
 }
 
+/**
+ * Resize every supported image (jpg, jpeg, png, webp, tiff, avif) in a directory.
+ * Refuses to run when the output directory is the input directory, since that would
+ * overwrite the originals.
+ *
+ * @param inputDir - Directory containing the source images.
+ * @param outputDir - Directory to write resized images to (created if missing).
+ * @param width - Target width in pixels (1-16383).
+ * @param height - Target height in pixels (1-16383).
+ * @throws If the directories are the same, a dimension is invalid, or any image fails.
+ */
 export async function batchResize(
   inputDir: string,
   outputDir: string,
   width?: number,
   height?: number,
 ): Promise<void> {
+  assertDimension(width, 'width');
+  assertDimension(height, 'height');
+
   try {
+    if (path.resolve(inputDir) === path.resolve(outputDir)) {
+      throw new Error(
+        'Output directory must be different from the input directory.',
+      );
+    }
+
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
@@ -68,8 +119,9 @@ export async function batchResize(
     const supportedFormats = /\.(jpg|jpeg|png|webp|tiff|avif)$/i;
 
     const files = fs
-      .readdirSync(inputDir)
-      .filter((file) => supportedFormats.test(file));
+      .readdirSync(inputDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && supportedFormats.test(entry.name))
+      .map((entry) => entry.name);
 
     for (const file of files) {
       const inputPath = path.join(inputDir, file);
@@ -86,13 +138,51 @@ export async function batchResize(
   }
 }
 
+/**
+ * Compress an image while maintaining quality. The output format follows the output
+ * file extension (jpg, jpeg, png, webp, avif). PNG output is palette-quantized, so
+ * `quality` trades colors for size there.
+ *
+ * @param inputPath - Path of the source image.
+ * @param outputPath - Path to write the compressed image to.
+ * @param quality - Compression quality, an integer from 1 to 100.
+ * @throws If quality is out of range, the extension is unsupported, or compression fails.
+ */
 export async function compressImage(
   inputPath: string,
   outputPath: string,
   quality: number,
 ): Promise<void> {
+  if (!Number.isInteger(quality) || quality < 1 || quality > 100) {
+    throw new Error(
+      `Invalid quality: ${quality}. Must be an integer between 1 and 100.`,
+    );
+  }
+
+  const format = path.extname(outputPath).slice(1).toLowerCase();
+  const compressible = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+  if (!compressible.includes(format)) {
+    throw new Error(
+      `Invalid format: ${format}. Supported formats: ${compressible.join(', ')}`,
+    );
+  }
+
   try {
-    await sharp(inputPath).jpeg({ quality }).toFile(outputPath);
+    const image = sharp(inputPath);
+    switch (format) {
+      case 'png':
+        image.png({ palette: true, quality });
+        break;
+      case 'webp':
+        image.webp({ quality });
+        break;
+      case 'avif':
+        image.avif({ quality });
+        break;
+      default:
+        image.jpeg({ quality });
+    }
+    await image.toFile(outputPath);
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error('Failed to compress image: ' + error.message);
@@ -102,6 +192,13 @@ export async function compressImage(
   }
 }
 
+/**
+ * Read an image's metadata (format, dimensions, channels, etc.).
+ *
+ * @param inputPath - Path of the image.
+ * @returns The sharp metadata object.
+ * @throws If the file cannot be read as an image.
+ */
 export async function getImageInfo(inputPath: string): Promise<object> {
   try {
     return await sharp(inputPath).metadata();
