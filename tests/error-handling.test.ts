@@ -103,6 +103,12 @@ describe('Error handling (real sharp)', () => {
     expect(fs.statSync(lo).size).toBeLessThan(fs.statSync(hi).size);
   });
 
+  test('compressImage writes real AVIF data for an .avif output', async () => {
+    const out = path.join(tmp, 'o.avif');
+    await compressImage(path.join(__dirname, 'sample.jpg'), out, 50);
+    expect((await sharp(out).metadata()).format).toBe('heif');
+  }, 30000);
+
   test('getImageInfo wraps errors for a missing input', async () => {
     await expect(getImageInfo(missing())).rejects.toThrow(
       /^Failed to get image metadata:/,
