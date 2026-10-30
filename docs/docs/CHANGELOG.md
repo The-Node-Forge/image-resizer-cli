@@ -15,11 +15,23 @@ sidebar_position: 5
   commit SHAs, `npm ci` for reproducible installs, and no `${{ }}` expression
   interpolation inside `run` scripts.
 - Added Dependabot (npm, docs, GitHub Actions) and a `SECURITY.md` policy.
+- `--width`, `--height` and `--quality` are validated (positive integers; dimensions
+  1-16383, quality 1-100) instead of passing `NaN`/huge values through to `sharp`.
+- `batchResize` refuses to write into its input directory and ignores directories
+  whose names look like images.
 
 #### Changed:
 
 - **Breaking:** the minimum supported Node.js version is now 20.9 (required by
   `sharp@0.35`). CI and docs deploys now run on Node 20.
+
+#### Fixed:
+
+- CLI commands now exit with status code `1` on failure (previously always `0`).
+- `--version` reports the real package version (was hard-coded to `1.0.0`).
+- `main` in `package.json` points at the library entry (`dist/index.js`) instead of
+  the CLI, so `require('@the-node-forge/image-resizer-cli')` no longer runs the CLI.
+- `--quality 0` is no longer silently replaced by the default of 80.
 
 ## v1.1.0 - 2025-02-12
 
