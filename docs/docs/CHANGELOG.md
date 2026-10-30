@@ -8,8 +8,8 @@ sidebar_position: 5
 
 #### Security:
 
-- Upgraded `sharp` to `^0.35.5`, picking up fixes for the libvips, libheif and librsvg
-  vulnerabilities reported against `sharp@0.33.x`.
+- Upgraded `sharp` to `^0.35.5`, picking up fixes for the libvips, libheif and
+  librsvg vulnerabilities reported against `sharp@0.33.x`.
 - Ran `npm audit fix` for transitive dev dependencies.
 
 #### Changed:
