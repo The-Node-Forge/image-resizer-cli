@@ -11,6 +11,10 @@ sidebar_position: 5
 - Upgraded `sharp` to `^0.35.5`, picking up fixes for the libvips, libheif and
   librsvg vulnerabilities reported against `sharp@0.33.x`.
 - Ran `npm audit fix` for transitive dev dependencies.
+- Hardened GitHub Actions workflows: least-privilege `permissions`, actions pinned to
+  commit SHAs, `npm ci` for reproducible installs, and no `${{ }}` expression
+  interpolation inside `run` scripts.
+- Added Dependabot (npm, docs, GitHub Actions) and a `SECURITY.md` policy.
 
 #### Changed:
 
