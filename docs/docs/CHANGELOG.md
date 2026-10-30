@@ -8,10 +8,18 @@ sidebar_position: 5
 
 #### Security:
 
+- Upgraded `sharp` to `^0.35.5`, picking up fixes for the libvips, libheif and
+  librsvg vulnerabilities reported against `sharp@0.33.x`.
+- Ran `npm audit fix` for transitive dev dependencies.
 - Hardened GitHub Actions workflows: least-privilege `permissions`, actions pinned to
   commit SHAs, `npm ci` for reproducible installs, and no `${{ }}` expression
   interpolation inside `run` scripts.
 - Added Dependabot (npm, docs, GitHub Actions) and a `SECURITY.md` policy.
+
+#### Changed:
+
+- **Breaking:** the minimum supported Node.js version is now 20.9 (required by
+  `sharp@0.35`). CI and docs deploys now run on Node 20.
 
 ## v1.1.0 - 2025-02-12
 
