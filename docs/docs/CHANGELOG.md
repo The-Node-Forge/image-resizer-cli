@@ -4,7 +4,7 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
-## Unreleased
+## v2.0.0 - 2026-10-30
 
 #### Security:
 
