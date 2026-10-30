@@ -4,6 +4,15 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
+## Unreleased
+
+#### Security:
+
+- Hardened GitHub Actions workflows: least-privilege `permissions`, actions pinned to
+  commit SHAs, `npm ci` for reproducible installs, and no `${{ }}` expression
+  interpolation inside `run` scripts.
+- Added Dependabot (npm, docs, GitHub Actions) and a `SECURITY.md` policy.
+
 ## v1.1.0 - 2025-02-12
 
 #### Added:
