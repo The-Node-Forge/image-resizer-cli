@@ -6,6 +6,14 @@ sidebar_position: 5
 
 ## Unreleased
 
+#### Changed:
+
+- `compressImage` / `img-resizer compress` now choose the output format from the file
+  extension (`jpg`, `jpeg`, `png`, `webp`, `avif`) instead of always writing JPEG
+  data. Other extensions are rejected. Existing `.jpg` usage is unaffected;
+  `.png`/`.webp` outputs are now real PNG/WebP files rather than JPEG data with a
+  misleading extension.
+
 #### Fixed:
 
 - CLI commands now exit with status code `1` on failure (previously always `0`).
