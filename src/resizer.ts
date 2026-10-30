@@ -139,12 +139,14 @@ export async function batchResize(
 }
 
 /**
- * Compress an image as JPEG while maintaining quality.
+ * Compress an image while maintaining quality. The output format follows the output
+ * file extension (jpg, jpeg, png, webp, avif). PNG output is palette-quantized, so
+ * `quality` trades colors for size there.
  *
  * @param inputPath - Path of the source image.
- * @param outputPath - Path to write the compressed JPEG to.
- * @param quality - JPEG quality, an integer from 1 to 100.
- * @throws If quality is out of range or compression fails.
+ * @param outputPath - Path to write the compressed image to.
+ * @param quality - Compression quality, an integer from 1 to 100.
+ * @throws If quality is out of range, the extension is unsupported, or compression fails.
  */
 export async function compressImage(
   inputPath: string,
@@ -157,8 +159,30 @@ export async function compressImage(
     );
   }
 
+  const format = path.extname(outputPath).slice(1).toLowerCase();
+  const compressible = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+  if (!compressible.includes(format)) {
+    throw new Error(
+      `Invalid format: ${format}. Supported formats: ${compressible.join(', ')}`,
+    );
+  }
+
   try {
-    await sharp(inputPath).jpeg({ quality }).toFile(outputPath);
+    const image = sharp(inputPath);
+    switch (format) {
+      case 'png':
+        image.png({ palette: true, quality });
+        break;
+      case 'webp':
+        image.webp({ quality });
+        break;
+      case 'avif':
+        image.avif({ quality });
+        break;
+      default:
+        image.jpeg({ quality });
+    }
+    await image.toFile(outputPath);
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error('Failed to compress image: ' + error.message);

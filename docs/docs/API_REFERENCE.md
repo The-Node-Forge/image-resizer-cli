@@ -74,7 +74,8 @@ batchResize('images/', 'resized/', 500, 500);
 
 ### `compressImage(inputPath, outputPath, quality)`
 
-Compresses an image while maintaining quality.
+Compresses an image while maintaining quality. The output format is chosen from the
+output file extension (`jpg`, `jpeg`, `png`, `webp`, `avif`).
 
 **Parameters:**
 

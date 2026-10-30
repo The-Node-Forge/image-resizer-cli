@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import sharp from 'sharp';
 
 import {
   resizeImage,
@@ -84,5 +85,38 @@ describe('Input validation', () => {
     await batchResize(inDir, outDir, 50, 50);
 
     expect(fs.readdirSync(outDir)).toEqual(['real.jpg']);
+  });
+});
+
+describe('compressImage output format', () => {
+  const input = path.join(__dirname, 'sample.jpg');
+  let tmp: string;
+
+  beforeEach(() => {
+    tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'img-resizer-compress-'));
+  });
+
+  afterEach(() => {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  });
+
+  test.each([
+    ['jpg', 'jpeg'],
+    ['JPEG', 'jpeg'],
+    ['png', 'png'],
+    ['webp', 'webp'],
+  ])('writes real %s data matching the extension', async (ext, expected) => {
+    const out = path.join(tmp, `out.${ext}`);
+    await compressImage(input, out, 70);
+    const meta = await sharp(out).metadata();
+    expect(meta.format).toBe(expected);
+  });
+
+  test('rejects unsupported extensions without writing a file', async () => {
+    const out = path.join(tmp, 'out.gif');
+    await expect(compressImage(input, out, 70)).rejects.toThrow(
+      /Invalid format: gif/,
+    );
+    expect(fs.existsSync(out)).toBe(false);
   });
 });

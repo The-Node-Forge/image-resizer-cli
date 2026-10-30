@@ -24,6 +24,11 @@ sidebar_position: 5
 
 - **Breaking:** the minimum supported Node.js version is now 20.9 (required by
   `sharp@0.35`). CI and docs deploys now run on Node 20.
+- `compressImage` / `img-resizer compress` now choose the output format from the file
+  extension (`jpg`, `jpeg`, `png`, `webp`, `avif`) instead of always writing JPEG
+  data. Other extensions are rejected. Existing `.jpg` usage is unaffected;
+  `.png`/`.webp` outputs are now real PNG/WebP files rather than JPEG data with a
+  misleading extension.
 
 #### Fixed:
 
