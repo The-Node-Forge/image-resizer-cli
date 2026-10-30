@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import sharp, { type FormatEnum } from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
@@ -73,7 +73,7 @@ export async function convertImage(
     }
 
     await sharp(inputPath)
-      .toFormat(format as keyof sharp.FormatEnum)
+      .toFormat(format as keyof FormatEnum)
       .toFile(outputPath);
   } catch (error: unknown) {
     if (error instanceof Error) {
